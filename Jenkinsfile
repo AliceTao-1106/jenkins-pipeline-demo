@@ -26,7 +26,7 @@ pipeline {
       emailext(
         subject: "Build Status: ${currentBuild.currentResult}",
         body: "Hi team,\n\nThe build has finished with status: ${currentBuild.currentResult}.\n\nThanks,\nJenkins",
-        to: “s224714354@deakin.edu.au”,
+        to: "s224714354@deakin.edu.au",
         attachLog: true
       )
     }
