@@ -1,34 +1,64 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Install Dependencies') {
-      steps {
-        sh 'npm install'
-      }
-    }
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Step 1: Build - Install dependencies'
+                // Tool: npm (Node.js package manager)
+                sh 'npm install'
+            }
+        }
 
-    stage('Run Tests') {
-      steps {
-        sh 'npm test || true'
-      }
-    }
+        stage('Test') {
+            steps {
+                echo 'Step 2: Test - Run unit and integration tests'
+                // Tool: Jest 
+                sh 'npm test'
+            }
+        }
 
-    stage('Audit') {
-      steps {
-        sh 'npm audit || true'
-      }
-    }
-  }
+        stage('Code Analysis') {
+            steps {
+                echo 'Step 3: Code Analysis - Run code quality checks'
+                // Tool: SonarQube 
+                sh 'echo Running sonar-scanner...'
+            }
+        }
 
-  post {
-    always {
-      emailext(
-        subject: "Build Status: ${currentBuild.currentResult}",
-        body: "Hi team,\n\nThe build has finished with status: ${currentBuild.currentResult}.\n\nThanks,\nJenkins",
-        to: "s224714354@deakin.edu.au",
-        attachLog: true
-      )
+        stage('Security Scan') {
+            steps {
+                echo 'Step 4: Security Scan - Scan for vulnerabilities'
+                // Tool: Snyk
+                sh 'npm install -g snyk'
+                sh 'snyk auth $SNYK_TOKEN'
+                sh 'snyk test'
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Step 5: Deploy - Upload app to staging server'
+                // Tool: AWS CLI
+                sh 'echo Deploying to staging...'
+            }
+        }
+
+        stage('Test on Staging') {
+            steps {
+                echo 'Step 6: Integration Tests on Staging'
+                // Tool: Jest + Supertest 
+                sh 'npm run test:staging'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                echo 'Step 7: Deploy - Upload app to production server'
+                // Tool: Docker
+                sh 'echo Deploying to production...'
+            }
+        }
     }
-  }
 }
+
