@@ -2,63 +2,38 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Stage Summary') {
             steps {
-                echo 'Step 1: Build - Install dependencies'
-                // Tool: npm (Node.js package manager)
-                sh 'npm install'
-            }
-        }
+                echo 'Stage 1: Build'
+                echo 'Task: Compile and package the application source code.'
+                echo 'Tool: Maven'
 
-        stage('Test') {
-            steps {
-                echo 'Step 2: Test - Run unit and integration tests'
-                // Tool: Jest 
-                sh 'npm test'
-            }
-        }
+                echo 'Stage 2: Unit and Integration Tests'
+                echo 'Task: Execute unit tests to validate individual components and integration tests to verify that modules work together correctly.'
+                echo 'Tool: Jest'
 
-        stage('Code Analysis') {
-            steps {
-                echo 'Step 3: Code Analysis - Run code quality checks'
-                // Tool: SonarQube 
-                sh 'echo Running sonar-scanner...'
-            }
-        }
+                echo 'Stage 3: Code Analysis'
+                echo 'Task: Analyze source code for maintainability, code smells, and potential bugs.'
+                echo 'Tool: SonarQube'
 
-        stage('Security Scan') {
-            steps {
-                echo 'Step 4: Security Scan - Scan for vulnerabilities'
-                // Tool: Snyk
-                sh 'npm install -g snyk'
-                sh 'snyk auth $SNYK_TOKEN'
-                sh 'snyk test'
-            }
-        }
+                echo 'Stage 4: Security Scan'
+                echo 'Task: Scan the project dependencies and codebase for known vulnerabilities.'
+                echo 'Tool: Snyk'
 
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Step 5: Deploy - Upload app to staging server'
-                // Tool: AWS CLI
-                sh 'echo Deploying to staging...'
-            }
-        }
+                echo 'Stage 5: Deploy to Staging'
+                echo 'Task: Deploy the built application to a staging environment to simulate production deployment.'
+                echo 'Tool: SCP (Secure Copy Protocol)'
 
-        stage('Test on Staging') {
-            steps {
-                echo 'Step 6: Integration Tests on Staging'
-                // Tool: Jest + Supertest 
-                sh 'npm run test:staging'
-            }
-        }
+                echo 'Stage 6: Integration Tests on Staging'
+                echo 'Task: Run automated tests on the staging environment to verify real-world functionality.'
+                echo 'Tool: Postman (via Newman CLI)'
 
-        stage('Deploy to Production') {
-            steps {
-                echo 'Step 7: Deploy - Upload app to production server'
-                // Tool: Docker
-                sh 'echo Deploying to production...'
+                echo 'Stage 7: Deploy to Production'
+                echo 'Task: Deploy the verified build from staging to the production server.'
+                echo 'Tool: AWS CLI'
             }
         }
     }
 }
+
 
