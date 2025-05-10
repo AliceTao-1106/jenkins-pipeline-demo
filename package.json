@@ -1,3 +1,12 @@
-"scripts": {
-  "test": "echo \"No tests yet. Passing by default.\" && exit 0"
+{
+  "name": "jenkins-pipeline-demo",
+  "version": "1.0.0",
+  "description": "A simple demo app for Jenkins CI/CD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet. Passing by default.\" && exit 0"
+  },
+  "author": "Alice Tao",
+  "license": "ISC"
 }
+
